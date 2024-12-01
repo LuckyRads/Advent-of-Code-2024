@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Day 1 - Task 1",
+            "request": "launch",
+            "mainClass": "${file}",
+            "cwd": "${workspaceFolder}/day-1"
+        },
+        {
+            "type": "java",
+            "name": "Day 1 - Task 2",
+            "request": "launch",
+            "mainClass": "${file}",
+            "cwd": "${workspaceFolder}/day-1"
+        }
+    ]
+}

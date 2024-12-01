@@ -1,0 +1,3 @@
+Map smallest to smallest numbers in lists
+Diff between each
+Sum of differences
