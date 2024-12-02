@@ -13,6 +13,6 @@
             "request": "launch",
             "mainClass": "${file}",
             "cwd": "${workspaceFolder}/day-1"
-        }
+        },
     ]
 }
