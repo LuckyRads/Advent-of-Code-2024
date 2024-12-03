@@ -14,5 +14,19 @@
             "mainClass": "${file}",
             "cwd": "${workspaceFolder}/day-1"
         },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 3 - Task 1",
+            "cwd": "${workspaceFolder}/day-3",
+            "console": "integratedTerminal",
+            "preLaunchTask": "rust: cargo build - day 3",
+            "windows": {
+                "program": "${workspaceFolder}/day-3/target/debug/day-3.exe",
+            },
+            "args": [
+                "1"
+            ]
+        },
     ]
 }
