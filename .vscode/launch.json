@@ -19,10 +19,28 @@
             "request": "launch",
             "name": "Day 3 - Task 1",
             "cwd": "${workspaceFolder}/day-3",
+            "cargo": {
+                "cwd": "${workspaceFolder}/day-3",
+                "args": [
+                    "build",
+                    "--bin",
+                    "day-3"
+                ]
+            },
+            "args": [
+                "1"
+            ]
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "DEPRECATED: Day 3 - Task 1",
+            "cwd": "${workspaceFolder}/day-3",
             "console": "integratedTerminal",
             "preLaunchTask": "rust: cargo build - day 3",
-            "windows": {
-                "program": "${workspaceFolder}/day-3/target/debug/day-3.exe",
+            "program": "${workspaceFolder}/day-3/target/debug/day-3",
+            "env": {
+                "RUST_BACKTRACE": "full"
             },
             "args": [
                 "1"

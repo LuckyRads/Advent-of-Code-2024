@@ -2,9 +2,9 @@ mod task1;
 // mod task2;
 mod utils;
 
-use std::io;
+use std::{error::Error, io};
 
-fn main() -> Result<(), io::Error> {
+fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 2 {
         eprintln!("Usage: cargo run <task_number>");
