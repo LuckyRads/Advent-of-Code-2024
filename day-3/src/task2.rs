@@ -16,10 +16,23 @@ impl ProgramInterpreter {
     }
 
     pub fn parse_input(&mut self) -> Result<(), ParseIntError> {
+        let initial_hay = "do()".to_owned() + &self.unparsed_string + "don't()";
+        let mut instruction_hay = String::new();
+
+        let do_dont_regex = regex::Regex::new(r"do\(\)(.*?)don't\(\)").unwrap();
+        let do_dont_capture_matches = do_dont_regex.captures_iter(&initial_hay);
+        for capture_match in do_dont_capture_matches {
+            let matched_strings: Vec<&str> = capture_match
+                .iter()
+                .skip(1)
+                .map(|capture| capture.unwrap().as_str())
+                .collect();
+
+            instruction_hay += &matched_strings.join("");
+        }
+
         let instruction_regex = regex::Regex::new(r"mul\(([0-9]{1,3}),([0-9]{1,3})\)").unwrap();
-
-        let capture_matches = instruction_regex.captures_iter(&self.unparsed_string);
-
+        let capture_matches = instruction_regex.captures_iter(&instruction_hay);
         for capture_match in capture_matches {
             let matched_strings: Vec<&str> = capture_match
                 .iter()
@@ -51,7 +64,7 @@ pub fn solve() -> Result<(), Box<dyn Error>> {
     program_interpreter.parse_input()?;
 
     let result = program_interpreter.calculate();
-    let output_writer = FileWriter::new("./output/task1.txt");
+    let output_writer = FileWriter::new("./output/task2.txt");
     output_writer.write(&result.to_string())?;
 
     return Ok(());

@@ -1,8 +1,8 @@
 mod task1;
-// mod task2;
+mod task2;
 mod utils;
 
-use std::{error::Error, io};
+use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = std::env::args().collect();
@@ -15,7 +15,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     if args[1] == "1" {
         task1::solve()?;
     } else if args[1] == "2" {
-        // task2::solve()?;
+        task2::solve()?;
     } else {
         eprintln!("Invalid task number");
         std::process::exit(1);
