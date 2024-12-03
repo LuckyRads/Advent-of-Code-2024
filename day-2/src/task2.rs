@@ -99,6 +99,7 @@ pub fn solve() -> Result<(), io::Error> {
                     && is_vec_asc_or_desc(&dampened_numbers)
                 {
                     safe_report = true;
+                    break;
                 }
             }
         }
