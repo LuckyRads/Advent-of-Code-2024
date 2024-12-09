@@ -27,31 +27,44 @@ impl RuleEngine {
         let update_lines = input_string
             .iter()
             .filter(|line| line.contains(","))
-            .filter(|line| {
-                self.page_number_pairs
-                    .iter()
-                    .any(|pair| line.contains(&pair.0) || line.contains(&pair.1))
-            })
             .collect::<Vec<&String>>();
 
-        let rule_regex_strings = self
+        let rule_regexes = self
             .page_number_pairs
             .iter()
             .map(|pair| {
                 (
                     Regex::new(&format!(r"{}.*{}", &pair.0, &pair.1)).unwrap(),
+                    Regex::new(&format!(r"{}.*{}", &pair.1, &pair.0)).unwrap(),
                     (pair.0.to_string(), pair.1.to_string()),
                 )
             })
-            .collect::<Vec<(Regex, (String, String))>>();
+            .collect::<Vec<(Regex, Regex, (String, String))>>();
+
+        // for x in &update_lines {
+        //     for r in &rule_regexes {
+        //         println!(
+        //             "{} {} {}",
+        //             x,
+        //             &r.0.find(x).is_some(),
+        //             &r.1.find(x).is_none()
+        //         )
+        //     }
+        // }
 
         update_lines
             .iter()
             .filter(|line| {
-                rule_regex_strings.iter().all(|(regex, pair)| {
-                    Some(regex.captures(line)).is_some()
-                        || (!line.contains(&pair.0) && !line.contains(&pair.1))
-                })
+                rule_regexes
+                    .iter()
+                    .all(|(regex_positive, regex_negative, pair)| {
+                        regex_positive.find(line).is_some()
+                            && regex_negative.find(line).is_none()
+                            && line.contains(&pair.0)
+                            && line.contains(&pair.1)
+                            || !line.contains(&pair.0)
+                            || !line.contains(&pair.1)
+                    })
             })
             .map(|line| line.to_string())
             .collect::<Vec<String>>()
