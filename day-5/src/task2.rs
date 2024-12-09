@@ -8,7 +8,7 @@ pub fn solve() -> Result<(), Box<dyn Error>> {
     let lines = file_reader.read_to_string_vec()?;
 
     let output_writer = FileWriter::new("./output/task2.txt");
-    output_writer.write(&xmas_count.to_string())?;
+    // output_writer.write(&xmas_count.to_string())?;
 
     return Ok(());
 }
