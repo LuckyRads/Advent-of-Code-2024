@@ -73,10 +73,10 @@ impl XmasFinder {
     fn search_for_word_at_pos(&self, i: usize, j: usize) -> i32 {
         let mut xmas_count = 0;
 
-        let has_space_to_east = j + Self::SEARCH_WORD.len() < self.char_matrix[i].len();
+        let has_space_to_east = j + Self::SEARCH_WORD.len() <= self.char_matrix[i].len();
         let has_space_to_west = j >= Self::SEARCH_WORD.len();
         let has_space_to_north = i >= Self::SEARCH_WORD.len();
-        let has_space_to_south = i + Self::SEARCH_WORD.len() < self.char_matrix.len();
+        let has_space_to_south = i + Self::SEARCH_WORD.len() <= self.char_matrix.len();
 
         // Search for XMAS horizontally
         if has_space_to_east {
