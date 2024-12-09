@@ -19,6 +19,7 @@ impl RuleEngine {
             .map(|line| line.trim().split("|").collect::<Vec<_>>())
             .map(|arr| (arr[0].to_string(), arr[1].to_string()))
             .collect::<Vec<(String, String)>>();
+
         RuleEngine { page_number_pairs }
     }
 
@@ -33,18 +34,23 @@ impl RuleEngine {
             })
             .collect::<Vec<&String>>();
 
-        let rule_regexes = self
+        let rule_regex_strings = self
             .page_number_pairs
             .iter()
-            .map(|pair| (format!("{}.*{}", pair.0, pair.1), pair))
-            .map(|(regex_str, pair)| (Regex::new(&regex_str).unwrap(), pair))
-            .collect::<Vec<(Regex, &(String, String))>>();
+            .map(|pair| {
+                (
+                    Regex::new(&format!(r"{}.*{}", &pair.0, &pair.1)).unwrap(),
+                    (pair.0.to_string(), pair.1.to_string()),
+                )
+            })
+            .collect::<Vec<(Regex, (String, String))>>();
 
         update_lines
             .iter()
             .filter(|line| {
-                rule_regexes.iter().all(|(regex, pair)| {
-                    regex.is_match(line) || (!line.contains(&pair.0) && !line.contains(&pair.1))
+                rule_regex_strings.iter().all(|(regex, pair)| {
+                    Some(regex.captures(line)).is_some()
+                        || (!line.contains(&pair.0) && !line.contains(&pair.1))
                 })
             })
             .map(|line| line.to_string())
