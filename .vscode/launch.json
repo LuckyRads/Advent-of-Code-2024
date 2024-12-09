@@ -51,6 +51,23 @@
         {
             "type": "lldb",
             "request": "launch",
+            "name": "Day 4 - Task 1",
+            "cwd": "${workspaceFolder}/day-4",
+            "cargo": {
+                "cwd": "${workspaceFolder}/day-4",
+                "args": [
+                    "build",
+                    "--bin",
+                    "day-4"
+                ]
+            },
+            "args": [
+                "1"
+            ]
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
             "name": "DEPRECATED: Day 3 - Task 1",
             "cwd": "${workspaceFolder}/day-3",
             "console": "integratedTerminal",
