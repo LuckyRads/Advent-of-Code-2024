@@ -91,6 +91,46 @@
         {
             "type": "lldb",
             "request": "launch",
+            "name": "Day 5 - Task 1",
+            "cwd": "${workspaceFolder}/day-5",
+            "cargo": {
+                "cwd": "${workspaceFolder}/day-5",
+                "args": [
+                    "build",
+                    "--bin",
+                    "day-5"
+                ]
+            },
+            "args": [
+                "1"
+            ],
+            "env": {
+                "RUST_BACKTRACE": "full"
+            }
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Day 5 - Task 2",
+            "cwd": "${workspaceFolder}/day-5",
+            "cargo": {
+                "cwd": "${workspaceFolder}/day-5",
+                "args": [
+                    "build",
+                    "--bin",
+                    "day-5"
+                ]
+            },
+            "args": [
+                "2"
+            ],
+            "env": {
+                "RUST_BACKTRACE": "full"
+            }
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
             "name": "DEPRECATED: Day 3 - Task 1",
             "cwd": "${workspaceFolder}/day-3",
             "console": "integratedTerminal",
