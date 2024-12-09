@@ -1,4 +1,4 @@
-use std::{borrow::Borrow, error::Error, num::ParseIntError};
+use std::{borrow::Borrow, error::Error, fmt::format, num::ParseIntError};
 
 use crate::utils::{file_reader::FileReader, file_writer::FileWriter};
 
@@ -74,13 +74,14 @@ impl XmasFinder {
         let mut xmas_count = 0;
 
         let has_space_to_east = j + Self::SEARCH_WORD.len() <= self.char_matrix[i].len();
-        let has_space_to_west = j >= Self::SEARCH_WORD.len();
-        let has_space_to_north = i >= Self::SEARCH_WORD.len();
-        let has_space_to_south = i + Self::SEARCH_WORD.len() <= self.char_matrix.len();
+        let has_space_to_west = j >= Self::SEARCH_WORD.len() - 1;
+        let has_space_to_north = i >= Self::SEARCH_WORD.len() - 1;
+        let has_space_to_south = i + Self::SEARCH_WORD.len() <= self.char_matrix[i].len();
 
         // Search for XMAS horizontally
         if has_space_to_east {
             xmas_count += if self.search_for_word_at_pos_horizontally(i, j, true) {
+                // println!("{} {} east", i, j);
                 1
             } else {
                 0
@@ -88,6 +89,7 @@ impl XmasFinder {
         }
         if has_space_to_west {
             xmas_count += if self.search_for_word_at_pos_horizontally(i, j, false) {
+                // println!("{} {} west", i, j);
                 1
             } else {
                 0
@@ -97,6 +99,7 @@ impl XmasFinder {
         // Search for XMAS vertically
         if has_space_to_south {
             xmas_count += if self.search_for_word_at_pos_vertically(i, j, true) {
+                // println!("{} {} south", i, j);
                 1
             } else {
                 0
@@ -104,6 +107,7 @@ impl XmasFinder {
         }
         if has_space_to_north {
             xmas_count += if self.search_for_word_at_pos_vertically(i, j, false) {
+                // println!("{} {} north", i, j);
                 1
             } else {
                 0
@@ -114,6 +118,7 @@ impl XmasFinder {
         // NE
         if has_space_to_north && has_space_to_east {
             xmas_count += if self.search_for_word_at_pos_diag(i, j, Direction::NE) {
+                // println!("{} {} ne", i, j);
                 1
             } else {
                 0
@@ -122,6 +127,7 @@ impl XmasFinder {
         // SE
         if has_space_to_south && has_space_to_east {
             xmas_count += if self.search_for_word_at_pos_diag(i, j, Direction::SE) {
+                // println!("{} {} se", i, j);
                 1
             } else {
                 0
@@ -130,6 +136,7 @@ impl XmasFinder {
         // SW
         if has_space_to_south && has_space_to_west {
             xmas_count += if self.search_for_word_at_pos_diag(i, j, Direction::SW) {
+                // println!("{} {} sw", i, j);
                 1
             } else {
                 0
@@ -138,6 +145,7 @@ impl XmasFinder {
         // NW
         if has_space_to_north && has_space_to_west {
             xmas_count += if self.search_for_word_at_pos_diag(i, j, Direction::NW) {
+                // println!("{} {} nw", i, j);
                 1
             } else {
                 0
@@ -149,6 +157,7 @@ impl XmasFinder {
 }
 
 pub fn solve() -> Result<(), Box<dyn Error>> {
+    // let mut file_reader = FileReader::new("./input/input_test.txt")?;
     let mut file_reader = FileReader::new("./input/input.txt")?;
     let lines = file_reader.read_to_string_vec()?;
 
@@ -164,10 +173,9 @@ pub fn solve() -> Result<(), Box<dyn Error>> {
     let xmas_finder = XmasFinder::new(char_matrix);
     for i in 0..xmas_finder.char_matrix().len() {
         for j in 0..xmas_finder.char_matrix()[i].len() {
-            if xmas_finder.char_matrix()[i][j] != 'X' {
-                continue;
+            if xmas_finder.char_matrix()[i][j] == 'X' {
+                xmas_count += xmas_finder.search_for_word_at_pos(i, j);
             }
-            xmas_count += xmas_finder.search_for_word_at_pos(i, j);
         }
     }
 
